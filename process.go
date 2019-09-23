@@ -63,11 +63,6 @@ func (m Map) ThreadID() (int, error) {
 	return strconv.Atoi(m.Path[i+1 : len(m.Path)-1])
 }
 
-// ParseMaps parses /proc/$$/maps into a useable data structure.
-func ParseMaps() (maps Mapping, err error) {
-	return defaultProcess.ParseMaps()
-}
-
 func FindByPattern(region *Region, pattern string, reload bool) {}
 func GetRegion(name string, index int, filter uint8) *Region    { return &Region{} }
 func ReadMemory(address uintptr, size int) []byte               { return []byte{} }
@@ -84,12 +79,8 @@ type Region struct {
 	End      uintptr
 }
 
-func New(path string, start, end uintptr) *Region {
+func NewMemoryRegion(path string, start, end uintptr) *Region {
 	return &Region{}
-}
-
-func Find(pc uintptr) (m Map, ok bool) {
-	return defaultProcess.Find(pc)
 }
 
 func (p Perms) String() string {
@@ -126,11 +117,6 @@ const (
 	VVar
 )
 
-// ParseType parses s into a Type.
-func ParseType(s string) Type {
-	return defaultProcess.ParseType(s)
-}
-
 func (t Type) String() string {
 	if int(t) < len(typeStrings) {
 		return typeStrings[t]
@@ -161,12 +147,12 @@ type GameProcess struct {
 	Maps          []byte // /proc/PID/maps
 }
 
-func (self *Process) ProcPrefix(sectionName) string {
+func (self *GameProcess) ProcPrefix(sectionName string) string {
 	return fmt.Sprintf("/proc/%v/%s", self.PID, sectionName)
 }
 
-func (self *Process) MapsPath() string { return self.ProcPrefix("maps") }
-func (self *Process) ExePath() string  { return self.ProcPrefix("exe") }
+func (self *GameProcess) MapsPath() string { return self.ProcPrefix("maps") }
+func (self *GameProcess) ExePath() string  { return self.ProcPrefix("exe") }
 
 func FindGameProcess() *GameProcess {
 	gameProcess := &GameProcess{
@@ -204,7 +190,7 @@ func FindGameProcess() *GameProcess {
 }
 
 // ParseMaps parses the process' procfs mapping into a useable data structure.
-func (self Process) ParseMaps() (maps Mapping, err error) {
+func (self *GameProcess) ParseMaps() (maps Mapping, err error) {
 	file, err := os.Open(self.MapsPath())
 	if err != nil {
 		return nil, err
@@ -256,13 +242,13 @@ func (self Process) ParseMaps() (maps Mapping, err error) {
 
 		m.Inode = parseUint(parts[4])
 		m.Path = string(parts[len(parts)-1])
-		m.Type = p.ParseType(m.Path)
+		m.Type = self.ParseType(m.Path)
 		maps = append(maps, m)
 	}
 	return maps, s.Err()
 }
 
-func (self Process) Find(pc uintptr) (m Map, ok bool) {
+func (self *GameProcess) Find(pc uintptr) (m Map, ok bool) {
 	maps, err := self.ParseMaps()
 	if err != nil {
 		return m, false
@@ -275,7 +261,7 @@ func (self Process) Find(pc uintptr) (m Map, ok bool) {
 	return m, false
 }
 
-func (self Process) ParseType(s string) Type {
+func (self *GameProcess) ParseType(s string) Type {
 	if s[0] == '[' {
 		switch s {
 		case "[heap]":
@@ -289,7 +275,7 @@ func (self Process) ParseType(s string) Type {
 		case "[vvar]":
 			return VVar
 		default:
-			return ""
+			return Unknown
 		}
 		if strings.HasPrefix(s, "[stack:") && strings.HasSuffix(s, "]") {
 			return Stack

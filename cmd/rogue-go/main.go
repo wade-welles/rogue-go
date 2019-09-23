@@ -3,7 +3,7 @@ package main
 import (
 	"runtime"
 
-	rogue "github.com/lostinblue/rogue-go"
+	rogue "github.com/wade-welles/rogue-go"
 )
 
 func main() {

@@ -64,7 +64,7 @@ type GameObject struct {
 
 type BoneMatrix struct {
 	Vector Vector
-	Offset []byte // ? Is this the right name, I dont really understand why its called buff 
+	Offset []byte // ? Is this the right name, I dont really understand why its called buff
 }
 
 func (self *Game) NewRound() {
@@ -116,62 +116,61 @@ func (self *Game) Render() {
 	self.ParseObjects()
 }
 
-
 type Weapon int
 
 const (
-	NONE Weapon = 0
-	DEAGLE Weapon = 1
-	ELITE Weapon = 2
-	FIVESEVEN Weapon = 3
-	GLOCK Weapon = 4
-	AK47 Weapon = 7
-	AUG Weapon = 8
-	AWP Weapon = 9
-	FAMAS Weapon = 10
-	G3SG1 Weapon = 11
-	GALILAR Weapon = 13
-	M249 Weapon = 14
-	M4A1 Weapon = 16
-	MAC10 Weapon = 17
-	P90 Weapon = 19
-	UMP45 Weapon = 24
-	XM1014 Weapon = 25
-	BIZON Weapon = 26
-	MAG7 Weapon = 27
-	NEGEV Weapon = 28
-	SAWEDOFF Weapon = 29
-	TEC9 Weapon = 30
-	TASER Weapon = 31
-	HKP2000 Weapon = 32
-	MP7 Weapon = 33
-	MP9 Weapon = 34
-	NOVA Weapon = 35
-	P250 Weapon = 36
-	SCAR20 Weapon = 38
-	SG556 Weapon = 39
-	SSG08 Weapon = 40
-	KNIFE Weapon = 42
-	FLASHBANG Weapon = 43
-	HEGRENADE Weapon = 44
-	SMOKEGRENADE Weapon = 45
-	MOLOTOV Weapon = 46
-	DECOY Weapon = 47
+	NONE              Weapon = 0
+	DEAGLE            Weapon = 1
+	ELITE             Weapon = 2
+	FIVESEVEN         Weapon = 3
+	GLOCK             Weapon = 4
+	AK47              Weapon = 7
+	AUG               Weapon = 8
+	AWP               Weapon = 9
+	FAMAS             Weapon = 10
+	G3SG1             Weapon = 11
+	GALILAR           Weapon = 13
+	M249              Weapon = 14
+	M4A1              Weapon = 16
+	MAC10             Weapon = 17
+	P90               Weapon = 19
+	UMP45             Weapon = 24
+	XM1014            Weapon = 25
+	BIZON             Weapon = 26
+	MAG7              Weapon = 27
+	NEGEV             Weapon = 28
+	SAWEDOFF          Weapon = 29
+	TEC9              Weapon = 30
+	TASER             Weapon = 31
+	HKP2000           Weapon = 32
+	MP7               Weapon = 33
+	MP9               Weapon = 34
+	NOVA              Weapon = 35
+	P250              Weapon = 36
+	SCAR20            Weapon = 38
+	SG556             Weapon = 39
+	SSG08             Weapon = 40
+	KNIFE             Weapon = 42
+	FLASHBANG         Weapon = 43
+	HEGRENADE         Weapon = 44
+	SMOKEGRENADE      Weapon = 45
+	MOLOTOV           Weapon = 46
+	DECOY             Weapon = 47
 	INCENDIARYGRENADE Weapon = 48
-	C4 Weapon = 49
-	TERRORISTKNIFE Weapon = 59
-	M4A1SILENCER Weapon = 60
-	USPSILENCER Weapon = 61
-	CZ75A Weapon = 63
-	REVOLVER Weapon = 64
-	KNIFEBAYONET Weapon = 500
-	KNIFEFLIP Weapon = 505
-	KNIFEGUT Weapon = 506
-	KNIFEKARMABIT Weapon = 507
-	KNIFEM9BAYONET Weapon = 508
-	KNIFETACTICAL Weapon = 509
-	KNIFEFALCHION Weapon = 512
-	KNIFEBOWIE Weapon = 514
-	KNIFEBUTTERFLY = 515
-	KNIFEPUSH Weapon 516
+	C4                Weapon = 49
+	TERRORISTKNIFE    Weapon = 59
+	M4A1SILENCER      Weapon = 60
+	USPSILENCER       Weapon = 61
+	CZ75A             Weapon = 63
+	REVOLVER          Weapon = 64
+	KNIFEBAYONET      Weapon = 500
+	KNIFEFLIP         Weapon = 505
+	KNIFEGUT          Weapon = 506
+	KNIFEKARMABIT     Weapon = 507
+	KNIFEM9BAYONET    Weapon = 508
+	KNIFETACTICAL     Weapon = 509
+	KNIFEFALCHION     Weapon = 512
+	KNIFEBOWIE        Weapon = 514
+	KNIFEBUTTERFLY    Weapon = 515
+	KNIFEPUSH         Weapon = 516
 )
